@@ -1,13 +1,13 @@
 {
   "$GMTileSet":"v1",
-  "%Name":"TileSet_Doors_windows",
+  "%Name":"TileSet_walls_floor_pre",
   "autoTileSets":[],
   "macroPageTiles":{
     "SerialiseHeight":0,
     "SerialiseWidth":0,
     "TileSerialiseData":[],
   },
-  "name":"TileSet_Doors_windows",
+  "name":"TileSet_walls_floor_pre",
   "out_columns":14,
   "out_tilehborder":2,
   "out_tilevborder":2,
@@ -18,8 +18,8 @@
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",
   "spriteId":{
-    "name":"Spr_Doors_windows",
-    "path":"sprites/Spr_Doors_windows/Spr_Doors_windows.yy",
+    "name":"Spr_walls_floor_pre",
+    "path":"sprites/Spr_walls_floor_pre/Spr_walls_floor_pre.yy",
   },
   "spriteNoExport":false,
   "textureGroupId":{
@@ -28,11 +28,11 @@
   },
   "tileAnimationFrames":[],
   "tileAnimationSpeed":15.0,
-  "tileHeight":32,
+  "tileHeight":16,
   "tilehsep":0,
   "tilevsep":0,
   "tileWidth":32,
   "tilexoff":0,
   "tileyoff":0,
-  "tile_count":204,
+  "tile_count":352,
 }
