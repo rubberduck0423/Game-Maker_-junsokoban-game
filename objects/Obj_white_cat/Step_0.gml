@@ -18,10 +18,10 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         // ① 걷기 스프라이트로 전환 (방향이 바뀔 때만 image_index 리셋)
         var walk_sprite;
         switch (dir) {
-            case "up":    walk_sprite = Spr_black_cat_back_walking;   break;
-            case "down":  walk_sprite = Spr_black_cat_front_walking;  break;
-            case "left":  walk_sprite = Spr_black_cat_left_walking;   break;
-            case "right": walk_sprite = Spr_black_cat_right_walking;  break;
+            case "up":    walk_sprite = Spr_white_cat_back_walking;   break;
+            case "down":  walk_sprite = Spr_white_cat_front_walking;  break;
+            case "left":  walk_sprite = Spr_white_cat_left_walking;   break;
+            case "right": walk_sprite = Spr_white_cat_right_walking;  break;
         }
         if (sprite_index != walk_sprite) {
             sprite_index = walk_sprite;
@@ -66,10 +66,10 @@ if (!moving && queue_dx == 0 && queue_dy == 0 && !anyKey)
 {
     var stop_sprite;
     switch (dir) {
-        case "up":    stop_sprite = Spr_black_cat_back_stop;   break;
-        case "down":  stop_sprite = Spr_black_cat_front_stop;  break;
-        case "left":  stop_sprite = Spr_black_cat_left_stop;   break;
-        case "right": stop_sprite = Spr_black_cat_right_stop;  break;
+        case "up":    stop_sprite = Spr_white_cat_back_stop;   break;
+        case "down":  stop_sprite = Spr_white_cat_front_stop;  break;
+        case "left":  stop_sprite = Spr_white_cat_left_stop;   break;
+        case "right": stop_sprite = Spr_white_cat_right_stop;  break;
     }
     if (sprite_index != stop_sprite) {
         sprite_index = stop_sprite;

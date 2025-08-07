@@ -1,7 +1,7 @@
 //----------------------------------
 // 기본 방향 · 스프라이트
 dir          = "down";
-sprite_index = Spr_black_cat_front_stop;  // STOP도 4프레임 · 5 fps
+sprite_index = Spr_white_cat_front_stop;  // STOP도 4프레임 · 5 fps
 image_index  = 0;                         // Idle 첫 프레임
 
 //----------------------------------

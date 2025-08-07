@@ -39,6 +39,8 @@
   "resources":[
     {"id":{"name":"README","path":"notes/README/README.yy",},},
     {"id":{"name":"Obj_black_cat","path":"objects/Obj_black_cat/Obj_black_cat.yy",},},
+    {"id":{"name":"Obj_controller","path":"objects/Obj_controller/Obj_controller.yy",},},
+    {"id":{"name":"Obj_white_cat","path":"objects/Obj_white_cat/Obj_white_cat.yy",},},
     {"id":{"name":"Room","path":"rooms/Room/Room.yy",},},
     {"id":{"name":"spr_battle_screen","path":"sprites/spr_battle_screen/spr_battle_screen.yy",},},
     {"id":{"name":"Spr_black_cat_back_push","path":"sprites/Spr_black_cat_back_push/Spr_black_cat_back_push.yy",},},
