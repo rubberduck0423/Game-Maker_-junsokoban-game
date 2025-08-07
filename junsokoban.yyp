@@ -100,6 +100,7 @@
     {"id":{"name":"Spr_white_cqat_left_push","path":"sprites/Spr_white_cqat_left_push/Spr_white_cqat_left_push.yy",},},
     {"id":{"name":"Sprite38","path":"sprites/Sprite38/Sprite38.yy",},},
     {"id":{"name":"Sprite59","path":"sprites/Sprite59/Sprite59.yy",},},
+    {"id":{"name":"Sprite61","path":"sprites/Sprite61/Sprite61.yy",},},
     {"id":{"name":"TileSet_Doors_windows","path":"tilesets/TileSet_Doors_windows/TileSet_Doors_windows.yy",},},
     {"id":{"name":"TileSet_exterior","path":"tilesets/TileSet_exterior/TileSet_exterior.yy",},},
     {"id":{"name":"TileSet_ground_grass_details","path":"tilesets/TileSet_ground_grass_details/TileSet_ground_grass_details.yy",},},
