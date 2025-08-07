@@ -62,7 +62,7 @@
     },
     "name":"Spr_black_cat_back_stop",
     "playback":1,
-    "playbackSpeed":5.0,
+    "playbackSpeed":32.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",

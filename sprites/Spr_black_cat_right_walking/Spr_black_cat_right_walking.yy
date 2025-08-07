@@ -1,6 +1,6 @@
 {
   "$GMSprite":"",
-  "%Name":"Spr_black_cat_right_warking",
+  "%Name":"Spr_black_cat_right_walking",
   "bboxMode":2,
   "bbox_bottom":86,
   "bbox_left":31,
@@ -24,7 +24,7 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"ddfbbd15-ec2e-492c-9f29-e78a118f2e7f","blendMode":0,"displayName":"default","isLocked":false,"name":"ddfbbd15-ec2e-492c-9f29-e78a118f2e7f","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"Spr_black_cat_right_warking",
+  "name":"Spr_black_cat_right_walking",
   "nineSlice":{
     "$GMNineSliceData":"",
     "bottom":0,
@@ -55,7 +55,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"v1",
-    "%Name":"Spr_black_cat_right_warking",
+    "%Name":"Spr_black_cat_right_walking",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -79,9 +79,9 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"Spr_black_cat_right_warking",
+    "name":"Spr_black_cat_right_walking",
     "playback":1,
-    "playbackSpeed":4.5,
+    "playbackSpeed":80.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",
@@ -93,16 +93,16 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5f5ae8af-745e-4ba1-b1e5-fd8054c3d337","path":"sprites/Spr_black_cat_right_warking/Spr_black_cat_right_warking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5f5ae8af-745e-4ba1-b1e5-fd8054c3d337","path":"sprites/Spr_black_cat_right_walking/Spr_black_cat_right_walking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"1b719a74-fa1c-4e11-b619-feca90283ddc","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9f5229fd-3b37-4f26-bd62-a946f5922071","path":"sprites/Spr_black_cat_right_warking/Spr_black_cat_right_warking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9f5229fd-3b37-4f26-bd62-a946f5922071","path":"sprites/Spr_black_cat_right_walking/Spr_black_cat_right_walking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"def83628-8b9e-4431-a3d6-d933bb35b23d","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e120ee8e-52fc-4292-b32c-f22262de418c","path":"sprites/Spr_black_cat_right_warking/Spr_black_cat_right_warking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e120ee8e-52fc-4292-b32c-f22262de418c","path":"sprites/Spr_black_cat_right_walking/Spr_black_cat_right_walking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"a45b2993-5744-4e7d-8ea5-8adb140549cf","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"0916d780-e793-453c-bb46-6d72bce959b0","path":"sprites/Spr_black_cat_right_warking/Spr_black_cat_right_warking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"0916d780-e793-453c-bb46-6d72bce959b0","path":"sprites/Spr_black_cat_right_walking/Spr_black_cat_right_walking.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"c986dfad-c528-4d24-9855-b794108be9c0","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
