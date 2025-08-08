@@ -78,101 +78,109 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         }
        else if (b1 != noone)
 {
-    // ====== 박스 체인(최대 2개) — 다칸 박스 대응 ======
-// === 2칸 박스 축 제한(오브젝트 이름으로 직접 제한) ===
+    // === 2칸 박스 축 제한(오브젝트 이름으로 강제) ===
+    // width(2x1)는 위/아래만 허용, length(1x2)는 좌/우만 허용
     var lock_axis = false;
     if (b1.object_index == Obj_width_box) {
-        // width(2x1) : 위/아래만 허용 → 좌/우는 금지
+        // 좌/우(긴 축)으로는 금지 → 위/아래만 허용
         if (dx32 != 0) lock_axis = true;
     }
     else if (b1.object_index == Obj_length_box) {
-        // length(1x2) : 좌/우만 허용 → 위/아래는 금지
+        // 위/아래(긴 축)으로는 금지 → 좌/우만 허용
         if (dy32 != 0) lock_axis = true;
     }
 
     if (lock_axis) {
-        // 이 방향으로는 밀기 금지 → 아무 것도 하지 않고 끝
+        // 여길 통과하면 '아무 것도 하지 않음' = 밀기 실패
+        // (중요: 아래 로직이 실행되지 않도록 여기서 블록을 끝내야 함)
     }
-    // 1) b1 전면이 비어있는지
-    var blocked = !box_edge_clear(b1, dx32, dy32);
-
-    // 2) b2 찾기: b1 전면 전체(가로 w칸 또는 세로 h칸) 한 칸 앞에서 추가 박스 유무
-    var b2 = noone;
-    if (!blocked) {
-        var grid = 32;
-        var w1 = (b1.size_w != undefined) ? b1.size_w : 1;
-        var h1 = (b1.size_h != undefined) ? b1.size_h : 1;
-        var left_c1 = floor(b1.bbox_left / g) * g + g*0.5;
-        var top_c1  = floor(b1.bbox_top  / g) * g + g*0.5;
-        var half = g * 0.5 - 1;
-
-        if (dx32 != 0) {
-            var lead_x1 = (dx32 > 0) ? left_c1 + (w1-1)*g : left_c1;
-            for (var j=0; j<h1; j++) {
-                var cx = lead_x1 + dx32;
-                var cy = top_c1 + j*g;
-                var l2 = cx - half, t2 = cy - half, r2 = cx + half, b2r = cy + half;
-                var hit = collision_rectangle(l2,t2,r2,b2r, Obj_box_parent, false, true);
-                if (hit != noone && hit != b1) { b2 = hit; break; }
-            }
-        } else {
-            var lead_y1 = (dy32 > 0) ? top_c1 + (h1-1)*g : top_c1;
-            for (var i=0; i<w1; i++) {
-                var cx = left_c1 + i*g;
-                var cy = lead_y1 + dy32;
-                var l2 = cx - half, t2 = cy - half, r2 = cx + half, b2r = cy + half;
-                var hit = collision_rectangle(l2,t2,r2,b2r, Obj_box_parent, false, true);
-                if (hit != noone && hit != b1) { b2 = hit; break; }
-            }
-        }
-
-        // b2가 있으면 b2 전면도 비어 있어야
-        if (b2 != noone) {
-            if (!box_edge_clear(b2, dx32, dy32)) blocked = true;
-        }
-    }
-
-    // 3) 필요 파워 계산 (라이트=1, 헤비=2) — width/length는 라이트 취급
-    var count_light = (b1.object_index == Obj_heavy_box) ? 0 : 1;
-    var count_heavy = (b1.object_index == Obj_heavy_box) ? 1 : 0;
-    if (b2 != noone) {
-        count_light += (b2.object_index == Obj_heavy_box) ? 0 : 1;
-        count_heavy += (b2.object_index == Obj_heavy_box) ? 1 : 0;
-    }
-    var required = count_light + count_heavy * 2;
-
-    // 4) 푸셔 수(내 뒤 한 칸의 보조 고양이: 정지 + 같은 방향)
-    var hx = cell_x - dx32, hy = cell_y - dy32;
-    var lh = hx - half, th = hy - half, rh = hx + half, bh = hy + half;
-    var helper = collision_rectangle(lh, th, rh, bh, Obj_cat_parent, false, true);
-    var pushers = 1;
-    if (helper != noone && helper != id) {
-        if (helper.dir == dir && !helper.moving) pushers += 1;
-    }
-
-    // 5) 최종 판정 & 예약(앞→뒤) → 보조 → 나
-    if (!blocked && pushers >= required)
+    else
     {
-        if (b2 != noone) { b2.queue_dx += dx32; b2.queue_dy += dy32; b2.moving = true; }
-        { b1.queue_dx += dx32; b1.queue_dy += dy32; b1.moving = true; }
+        // ====== (기존) 다칸 박스 대응 로직 ======
+        // 1) b1 전면이 비어있는지
+        var blocked = !box_edge_clear(b1, dx32, dy32);
 
-        if (pushers >= 2 && helper != noone && helper != id && helper.dir == dir && !helper.moving) {
-            helper.queue_dx += dx32; helper.queue_dy += dy32; helper.moving = true;
-            // (원하면 helper도 push 스프라 전환)
+        // 2) b2 탐색 : b1 전면 전체 한 칸 앞에서 추가 박스 찾기
+        var b2 = noone;
+        if (!blocked) {
+            var g = self.grid;
+            var w1 = (b1.size_w != undefined) ? b1.size_w : 1;
+            var h1 = (b1.size_h != undefined) ? b1.size_h : 1;
+            var left_c1 = floor(b1.bbox_left / g) * g + g*0.5;
+            var top_c1  = floor(b1.bbox_top  / g) * g + g*0.5;
+            var half = g * 0.5 - 1;
+
+            if (dx32 != 0) {
+                var lead_x1 = (dx32 > 0) ? left_c1 + (w1-1)*g : left_c1;
+                for (var j=0; j<h1; j++) {
+                    var cx = lead_x1 + dx32;
+                    var cy = top_c1 + j*g;
+                    var l2 = cx - half, t2 = cy - half, r2 = cx + half, b2r = cy + half;
+                    var hit = collision_rectangle(l2,t2,r2,b2r, Obj_box_parent, false, true);
+                    if (hit != noone && hit != b1) { b2 = hit; break; }
+                }
+            } else {
+                var lead_y1 = (dy32 > 0) ? top_c1 + (h1-1)*g : top_c1;
+                for (var i=0; i<w1; i++) {
+                    var cx = left_c1 + i*g;
+                    var cy = lead_y1 + dy32;
+                    var l2 = cx - half, t2 = cy - half, r2 = cx + half, b2r = cy + half;
+                    var hit = collision_rectangle(l2,t2,r2,b2r, Obj_box_parent, false, true);
+                    if (hit != noone && hit != b1) { b2 = hit; break; }
+                }
+            }
+
+            // b2가 있으면 b2 전면도 비어 있어야
+            if (b2 != noone) {
+                if (!box_edge_clear(b2, dx32, dy32)) blocked = true;
+            }
         }
 
-        queue_dx += dx32; queue_dy += dy32; moving = true;
-
-        var my_push;
-        switch (dir) {
-            case "up":    my_push = Spr_white_cat_back_push;   break;
-            case "down":  my_push = Spr_white_cat_front_push;  break;
-            case "left":  my_push = Spr_white_cat_left_push;   break;
-            case "right": my_push = Spr_white_cat_right_push;  break;
+        // 3) 필요 파워(라이트=1, 헤비=2)
+        var count_light = (b1.object_index == Obj_heavy_box) ? 0 : 1;
+        var count_heavy = (b1.object_index == Obj_heavy_box) ? 1 : 0;
+        if (b2 != noone) {
+            count_light += (b2.object_index == Obj_heavy_box) ? 0 : 1;
+            count_heavy += (b2.object_index == Obj_heavy_box) ? 1 : 0;
         }
-        if (sprite_index != my_push) { sprite_index = my_push; image_index = 0; }
+        var required = count_light + count_heavy * 2;
+
+        // 4) 푸셔 수(뒤 한 칸 보조 고양이: 정지 + 같은 방향)
+        var g2 = self.grid;
+        var half2 = g2 * 0.5 - 1;
+        var hx = cell_x - dx32, hy = cell_y - dy32;
+        var lh = hx - half2, th = hy - half2, rh = hx + half2, bh = hy + half2;
+        var helper = collision_rectangle(lh, th, rh, bh, Obj_cat_parent, false, true);
+        var pushers = 1;
+        if (helper != noone && helper != id) {
+            if (helper.dir == dir && !helper.moving) pushers += 1;
+        }
+
+        // 5) 최종 판정 & 예약(앞→뒤) → 보조 → 나
+        if (!blocked && pushers >= required)
+        {
+            if (b2 != noone) { b2.queue_dx += dx32; b2.queue_dy += dy32; b2.moving = true; }
+            { b1.queue_dx += dx32; b1.queue_dy += dy32; b1.moving = true; }
+
+            if (pushers >= 2 && helper != noone && helper != id && helper.dir == dir && !helper.moving) {
+                helper.queue_dx += dx32; helper.queue_dy += dy32; helper.moving = true;
+                // (원하면 helper push 스프라도 전환)
+            }
+
+            queue_dx += dx32; queue_dy += dy32; moving = true;
+
+            var my_push;
+            switch (dir) {
+                case "up":    my_push = Spr_white_cat_back_push;   break;
+                case "down":  my_push = Spr_white_cat_front_push;  break;
+                case "left":  my_push = Spr_white_cat_left_push;   break;
+                case "right": my_push = Spr_white_cat_right_push;  break;
+            }
+            if (sprite_index != my_push) { sprite_index = my_push; image_index = 0; }
+        }
     }
 }
+
 
             else
             {
