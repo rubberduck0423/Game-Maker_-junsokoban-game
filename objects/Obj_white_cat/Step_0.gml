@@ -4,7 +4,6 @@ if (id != global.current_player && !moving) exit;
 
 var g = self.grid;    // ← Step 전역에서 쓸 로컬 별칭
 
-
 /// 앞면 전체(가로/세로 n칸) 한 칸 앞이 비었는지 검사 (아이스 박스 성공 시점 그대로)
 function box_edge_clear(_box, _dx32, _dy32) {
     var grid = 32;
@@ -22,9 +21,9 @@ function box_edge_clear(_box, _dx32, _dy32) {
             var cx = lead_x + _dx32;
             var cy = top_c + j*grid;
             var l = cx - half, t = cy - half, r = cx + half, b = cy + half;
-            if (collision_rectangle(l,t,r,b, Obj_wall,        false, true)) return false;
-            if (collision_rectangle(l,t,r,b, Obj_box_parent,  false, true)) return false;
-            if (collision_rectangle(l,t,r,b, Obj_cat_parent,  false, true)) return false;
+            if (collision_rectangle(l,t,r,b, Obj_wall,       false, true)) return false;
+            if (collision_rectangle(l,t,r,b, Obj_box_parent, false, true)) return false;
+            if (collision_rectangle(l,t,r,b, Obj_cat_parent, false, true)) return false;
         }
     } else {
         var lead_y = (_dy32 > 0) ? top_c + (h-1)*grid : top_c;
@@ -32,9 +31,9 @@ function box_edge_clear(_box, _dx32, _dy32) {
             var cx = left_c + i*grid;
             var cy = lead_y + _dy32;
             var l = cx - half, t = cy - half, r = cx + half, b = cy + half;
-            if (collision_rectangle(l,t,r,b, Obj_wall,        false, true)) return false;
-            if (collision_rectangle(l,t,r,b, Obj_box_parent,  false, true)) return false;
-            if (collision_rectangle(l,t,r,b, Obj_cat_parent,  false, true)) return false;
+            if (collision_rectangle(l,t,r,b, Obj_wall,       false, true)) return false;
+            if (collision_rectangle(l,t,r,b, Obj_box_parent, false, true)) return false;
+            if (collision_rectangle(l,t,r,b, Obj_cat_parent, false, true)) return false;
         }
     }
     return true;
@@ -76,14 +75,13 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         if (hit_wall) {
             // do nothing
         }
-        // 1) 박스 밀기 (단독)
+        // 1) 박스 밀기 (단독 시도)
         else if (b1 != noone)
         {
-            // 축 제한: width(2x1)=위/아래만, length(1x2)=좌/우만 + (요구대로) 2칸짜리는 전부 금지
+            // 축 제한: width(2x1)=위/아래만, length(1x2)=좌/우만
             var lock_axis = false;
-            if (b1.object_index == Obj_width_box  && dx32 != 0) lock_axis = true;
-            if (b1.object_index == Obj_length_box && dy32 != 0) lock_axis = true;
-            if (b1.size_w > 1 || b1.size_h > 1) lock_axis = true;                 // ★ 2칸 금지
+            if (b1.object_index == Obj_width_box  && dx32 != 0) lock_axis = true; // 가로형은 좌/우 금지
+            if (b1.object_index == Obj_length_box && dy32 != 0) lock_axis = true; // 세로형은 위/아래 금지
 
             if (!lock_axis)
             {
@@ -95,8 +93,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                 if (!blocked) {
                     var w1 = (b1.size_w != undefined) ? b1.size_w : 1;
                     var h1 = (b1.size_h != undefined) ? b1.size_h : 1;
-                    var left_c1 = floor(b1.bbox_left / g) * g + g*0.5;
-                    var top_c1  = floor(b1.bbox_top  / g) * g + g*0.5;
+                    var left_c1 = floor(b1.bbox_left / g) * g + g * 0.5;
+                    var top_c1  = floor(b1.bbox_top  / g) * g + g * 0.5;
                     var half2 = g * 0.5 - 1;
 
                     if (dx32 != 0) {
@@ -121,11 +119,11 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
                     if (b2 != noone) {
                         if (!box_edge_clear(b2, dx32, dy32)) blocked = true;
-                        if (b2.size_w > 1 || b2.size_h > 1) blocked = true;      // ★ 체인에 2칸도 금지
+                        // b2가 2칸이면 조건 강화는 아래에서 required로 처리
                     }
                 }
 
-                // 필요 파워(라이트=1, 헤비=2) — 단독이므로 보조 없어도 공식은 유지
+                // 필요 파워(라이트=1, 헤비=2)
                 var count_light = (b1.object_index == Obj_heavy_box) ? 0 : 1;
                 var count_heavy = (b1.object_index == Obj_heavy_box) ? 1 : 0;
                 if (b2 != noone) {
@@ -134,7 +132,11 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                 }
                 var required = count_light + count_heavy * 2;
 
-                // 보조(뒤 한 칸 고양이) — 단독이므로 pushers=1이면 heavy 못 밈
+                // ★ 2칸 상자는 항상 최소 2명 필요
+                if (b1.size_w > 1 || b1.size_h > 1) required = max(required, 2);
+                if (b2 != noone && (b2.size_w > 1 || b2.size_h > 1)) required = max(required, 2);
+
+                // 보조(뒤 한 칸 고양이)
                 var hx = cell_x - dx32, hy = cell_y - dy32;
                 var lh = hx - half, th = hy - half, rh = hx + half, bh = hy + half;
                 var helper = collision_rectangle(lh, th, rh, bh, Obj_cat_parent, false, true);
@@ -165,7 +167,7 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                 }
             }
         }
-        // 2) 앞칸이 고양이? → 조건 충족시에만 '협동 릴레이' 분기로 진입
+        // 2) 앞칸이 고양이? → 조건 충족시에만 '협동 릴레이'
         else if (
             cat1 != noone && cat1 != id
             && cat1.dir == dir && !cat1.moving
@@ -180,11 +182,10 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
             if (b1c != noone)
             {
-                // 축 제한 + (요구대로) 2칸짜리는 릴레이로도 금지
+                // 축 제한
                 var lock_axis2 = false;
                 if (b1c.object_index == Obj_width_box  && dx32 != 0) lock_axis2 = true;
                 if (b1c.object_index == Obj_length_box && dy32 != 0) lock_axis2 = true;
-                if (b1c.size_w > 1 || b1c.size_h > 1) lock_axis2 = true;         // ★ 2칸 금지
 
                 if (!lock_axis2)
                 {
@@ -220,14 +221,18 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
                         if (b2c != noone) {
                             if (!box_edge_clear(b2c, dx32, dy32)) blocked2 = true;
-                            if (b2c.size_w > 1 || b2c.size_h > 1) blocked2 = true; // ★ 체인 2칸 금지
                         }
                     }
 
-                    // 두 고양이 파워 = 2
+                    // 두 고양이 파워 = 2 (heavy는 2)
                     var required2 = ((b1c.object_index == Obj_heavy_box) ? 2 : 1)
                                   + ((b2c != noone && b2c.object_index == Obj_heavy_box) ? 2
                                      : (b2c != noone ? 1 : 0));
+
+                    // ★ 2칸 상자는 항상 최소 2명 필요
+                    if (b1c.size_w > 1 || b1c.size_h > 1) required2 = max(required2, 2);
+                    if (b2c != noone && (b2c.size_w > 1 || b2c.size_h > 1)) required2 = max(required2, 2);
+
                     var pushers2 = 2;
 
                     if (!blocked2 && pushers2 >= required2)
