@@ -13,7 +13,10 @@
     "name":"junsokoban",
     "path":"junsokoban.yyp",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"Obj_cat_parent",
+    "path":"objects/Obj_cat_parent/Obj_cat_parent.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
