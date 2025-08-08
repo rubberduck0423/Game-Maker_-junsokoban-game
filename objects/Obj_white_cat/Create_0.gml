@@ -14,3 +14,7 @@ grid       = 32;    // 한 칸 크기
 queue_dx   = 0;
 queue_dy   = 0;
 moving     = false; // 현재 보간 중인지 여부
+
+// 격자 정렬(권장)
+x = round(x/32)*32;
+y = round(y/32)*32;

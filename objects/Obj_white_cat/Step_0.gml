@@ -1,6 +1,5 @@
-
-if (id != global.current_player) exit;   // 선택되지 않았으면 코드 종료
-
+// 선택되지 않았으면 아무 것도 안 함
+if (!variable_global_exists("current_player") || id != global.current_player) exit;
 
 //----------------------------------
 // 1) 입력 → 32 px 예약 (이동 중 아닐 때만)
@@ -15,23 +14,27 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
     if (dx32 != 0 || dy32 != 0)  // 예약이 생겼을 때만
     {
-        // ① 걷기 스프라이트로 전환 (방향이 바뀔 때만 image_index 리셋)
-        var walk_sprite;
-        switch (dir) {
-            case "up":    walk_sprite = Spr_white_cat_back_walking;   break;
-            case "down":  walk_sprite = Spr_white_cat_front_walking;  break;
-            case "left":  walk_sprite = Spr_white_cat_left_walking;   break;
-            case "right": walk_sprite = Spr_white_cat_right_walking;  break;
-        }
-        if (sprite_index != walk_sprite) {
-            sprite_index = walk_sprite;
-            image_index  = 0;        // 새 방향일 때만 0부터
-        }
+        // ★ 앞칸이 벽이면 예약 금지
+        var nx = x + dx32;
+        var ny = y + dy32;
+        if (!place_meeting(nx, ny, Obj_wall))  // 벽이 아니면
+        {
+            // ① 걷기 스프라로 전환 (방향 바뀔 때만 image_index 리셋)
+            var walk_sprite;
+            switch (dir) {
+                case "up":    walk_sprite = Spr_white_cat_back_walking;   break;
+                case "down":  walk_sprite = Spr_white_cat_front_walking;  break;
+                case "left":  walk_sprite = Spr_white_cat_left_walking;   break;
+                case "right": walk_sprite = Spr_white_cat_right_walking;  break;
+            }
+            if (sprite_index != walk_sprite) { sprite_index = walk_sprite; image_index = 0; }
 
-        // ② 예약 큐 누적 & 이동 시작
-        queue_dx += dx32;
-        queue_dy += dy32;
-        moving    = true;
+            // ② 예약 큐 누적 & 이동 시작
+            queue_dx += dx32;
+            queue_dy += dy32;
+            moving    = true;
+        }
+        // 벽이면 아무 것도 안 함 (스톱 유지)
     }
 }
 
@@ -58,7 +61,7 @@ if (moving)
 }
 
 //----------------------------------
-// 3) 완전히 멈췄을 때만 STOP 스프라이트로 전환
+// 3) 완전히 멈췄을 때만 STOP 스프라로 전환
 var anyKey = keyboard_check(ord("W")) || keyboard_check(ord("A"))
           || keyboard_check(ord("S")) || keyboard_check(ord("D"));
 
@@ -71,9 +74,6 @@ if (!moving && queue_dx == 0 && queue_dy == 0 && !anyKey)
         case "left":  stop_sprite = Spr_white_cat_left_stop;   break;
         case "right": stop_sprite = Spr_white_cat_right_stop;  break;
     }
-    if (sprite_index != stop_sprite) {
-        sprite_index = stop_sprite;
-        image_index  = 0;      // Idle 첫 프레임
-    }
-    // image_speed는 편집기 Speed=5 fps 그대로 유지
+    if (sprite_index != stop_sprite) { sprite_index = stop_sprite; image_index = 0; }
+    // image_speed는 스프라 Speed=5 fps 그대로 (코드에서 건드리지 않음)
 }
