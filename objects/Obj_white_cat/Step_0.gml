@@ -80,14 +80,9 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         // 1) 박스 밀기 (단독 시도)
         else if (b1 != noone)
         {
-            // 축 제한: width(2x1)=위/아래만, length(1x2)=좌/우만
-            var lock_axis = false;
-            if (b1.size_w > b1.size_h && dx32 != 0) lock_axis = true; // 가로형(2x1)은 좌/우 금지 → 상/하만
-			if (b1.size_h > b1.size_w && dy32 != 0) lock_axis = true; // 세로형(1x2)은 상/하 금지 → 좌/우만
-
-            if (!lock_axis)
+            
             {
-                // b1 전면 비었나
+                
                 var blocked = !box_edge_clear(b1, dx32, dy32);
 
                 // b2 탐색 : b1 전면 전체 한 칸 앞에서 추가 박스 찾기
@@ -121,8 +116,7 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
                     if (b2 != noone) {
                         if (!box_edge_clear(b2, dx32, dy32)) blocked = true;
-						if (b2.object_index == Obj_width_box  && dx32 != 0) blocked = true; // width는 상하만
-						if (b2.object_index == Obj_length_box && dy32 != 0) blocked = true; // length는 좌우만
+
                         // b2가 2칸이면 조건 강화는 아래에서 required로 처리
                     }
                 }
@@ -135,10 +129,23 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                     count_heavy += (b2.object_index == Obj_heavy_box) ? 1 : 0;
                 }
                 var required = count_light + count_heavy * 2;
+				
+				
 
-                // ★ 2칸 상자는 항상 최소 2명 필요
-                if (b1.size_w > 1 || b1.size_h > 1) required = max(required, 2);
-                if (b2 != noone && (b2.size_w > 1 || b2.size_h > 1)) required = max(required, 2);
+				
+				// === 축에 따라 최소 인원 결정 ===
+				// 긴 축으로 미는가? (가로로 2x1인데 좌/우로 미는 경우, 세로로 1x2인데 상/하로 미는 경우)
+				var long1 = (b1.size_w > b1.size_h && dx32 != 0) || (b1.size_h > b1.size_w && dy32 != 0);
+
+				// 긴 축이면 최소 2명, 짧은 축이면 최소 1명
+				required = max(required, long1 ? 2 : 1);
+
+				// 체인에 b2가 있으면 그 박스도 같은 방향 기준으로 긴 축인지 체크
+				if (b2 != noone) {
+					var long2 = (b2.size_w > b2.size_h && dx32 != 0) || (b2.size_h > b2.size_w && dy32 != 0);
+					required = max(required, long2 ? 2 : 1);
+						}
+
 
                 // 보조(뒤 한 칸 고양이)
                 var hx = cell_x - dx32, hy = cell_y - dy32;
@@ -186,12 +193,7 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
             if (b1c != noone)
             {
-                // 축 제한
-                var lock_axis2 = false;
-                if (b1c.size_w > b1c.size_h && dx32 != 0) lock_axis2 = true;
-				if (b1c.size_h > b1c.size_w && dy32 != 0) lock_axis2 = true;
-
-                if (!lock_axis2)
+                
                 {
                     var blocked2 = !box_edge_clear(b1c, dx32, dy32);
 
@@ -225,8 +227,7 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
     if (b2c != noone) {
         // ★ b2c 축 제한: width는 상/하만, length는 좌/우만
-        if (b2c.object_index == Obj_width_box  && dx32 != 0)  blocked2 = true;
-        if (b2c.object_index == Obj_length_box && dy32 != 0)  blocked2 = true;
+
 
         // ★ 전면 비어있는지 최종 확인
         if (!blocked2 && !box_edge_clear(b2c, dx32, dy32))    blocked2 = true;
@@ -238,10 +239,19 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                     var required2 = ((b1c.object_index == Obj_heavy_box) ? 2 : 1)
                                   + ((b2c != noone && b2c.object_index == Obj_heavy_box) ? 2
                                      : (b2c != noone ? 1 : 0));
+									 
+					
 
-                    // ★ 2칸 상자는 항상 최소 2명 필요
-                    if (b1c.size_w > 1 || b1c.size_h > 1) required2 = max(required2, 2);
-                    if (b2c != noone && (b2c.size_w > 1 || b2c.size_h > 1)) required2 = max(required2, 2);
+
+                    // === 릴레이도 축에 따라 최소 인원 결정 ===
+					var long1c = (b1c.size_w > b1c.size_h && dx32 != 0) || (b1c.size_h > b1c.size_w && dy32 != 0);
+					required2 = max(required2, long1c ? 2 : 1);
+
+					if (b2c != noone) {
+						var long2c = (b2c.size_w > b2c.size_h && dx32 != 0) || (b2c.size_h > b2c.size_w && dy32 != 0);
+						required2 = max(required2, long2c ? 2 : 1);
+							}
+
 
                     var pushers2 = 2;
 
