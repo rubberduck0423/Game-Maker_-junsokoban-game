@@ -70,6 +70,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         var hit_wall = collision_rectangle(l, t, r, b, Obj_wall,       false, true);
         var b1       = collision_rectangle(l, t, r, b, Obj_box_parent, false, true);
         var cat1     = collision_rectangle(l, t, r, b, Obj_cat_parent, false, true);
+		
+		var front_cat = noone;
 
         // 0) 벽이면 막힘
         if (hit_wall) {
@@ -175,7 +177,7 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
             && instance_position(fx + dx32, fy + dy32, Obj_cat_parent) == noone
         )
         {
-            var front_cat = cat1;
+            front_cat = cat1;
 
             // 앞 고양이 앞칸 박스?
             var b1c = instance_position(fx + dx32, fy + dy32, Obj_box_parent);
@@ -245,10 +247,59 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                         front_cat.moving    = true;
 
                         queue_dx += dx32; queue_dy += dy32; moving = true;
+						
+						// 앞고양이 push 스프라 설정
+    {
+        var ps_front;
+        if (front_cat.object_index == Obj_white_cat) {
+            switch (dir) {
+                case "up":    ps_front = Spr_white_cat_back_push;   break;
+                case "down":  ps_front = Spr_white_cat_front_push;  break;
+                case "left":  ps_front = Spr_white_cat_left_push;   break;
+                case "right": ps_front = Spr_white_cat_right_push;  break;
+            }
+        } else {
+            switch (dir) {
+                case "up":    ps_front = Spr_black_cat_back_push;   break;
+                case "down":  ps_front = Spr_black_cat_front_push;  break;
+                case "left":  ps_front = Spr_black_cat_left_push;   break;
+                case "right": ps_front = Spr_black_cat_right_push;  break;
+            }
+        }
+        if (front_cat.sprite_index != ps_front) {
+            front_cat.sprite_index = ps_front;
+            front_cat.image_index  = 0;
+        }
+    }
+
+    // 내 push 스프라 설정
+    {
+        var ps_me;
+        if (object_index == Obj_white_cat) {
+            switch (dir) {
+                case "up":    ps_me = Spr_white_cat_back_push;   break;
+                case "down":  ps_me = Spr_white_cat_front_push;  break;
+                case "left":  ps_me = Spr_white_cat_left_push;   break;
+                case "right": ps_me = Spr_white_cat_right_push;  break;
+            }
+        } else {
+            switch (dir) {
+                case "up":    ps_me = Spr_black_cat_back_push;   break;
+                case "down":  ps_me = Spr_black_cat_front_push;  break;
+                case "left":  ps_me = Spr_black_cat_left_push;   break;
+                case "right": ps_me = Spr_black_cat_right_push;  break;
+            }
+        }
+        if (sprite_index != ps_me) {
+            sprite_index = ps_me;
+            image_index  = 0;
+        }
+    }
+    // ★★★ 추가 끝 ★★★
+}
                     }
                 }
-            }
-            else
+				 else
             {
                 // 박스가 없으면 둘 다 1칸 전진(순수 릴레이)
                 front_cat.queue_dx += dx32;
@@ -257,8 +308,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
                 queue_dx += dx32; queue_dy += dy32; moving = true;
             }
-        }
-        // 3) 빈 칸 → 평소 이동
+            }
+			// 3) 빈 칸 → 평소 이동
         else
         {
             queue_dx += dx32; queue_dy += dy32; moving = true;
@@ -271,8 +322,11 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                 case "right": walk_sprite = Spr_white_cat_right_walking;  break;
             }
             if (sprite_index != walk_sprite) { sprite_index = walk_sprite; image_index = 0; }
+        
+    }
+           
         }
-    } // (dx32||dy32)
+         // (dx32||dy32)
 } // (!moving && q==0)
 
 
