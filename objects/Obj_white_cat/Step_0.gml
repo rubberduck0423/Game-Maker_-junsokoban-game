@@ -121,6 +121,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 
                     if (b2 != noone) {
                         if (!box_edge_clear(b2, dx32, dy32)) blocked = true;
+						if (b2.object_index == Obj_width_box  && dx32 != 0) blocked = true; // width는 상하만
+						if (b2.object_index == Obj_length_box && dy32 != 0) blocked = true; // length는 좌우만
                         // b2가 2칸이면 조건 강화는 아래에서 required로 처리
                     }
                 }
@@ -196,35 +198,41 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
                     // b2c 탐색
                     var b2c = noone;
                     if (!blocked2)
-                    {
-                        var w1c = (b1c.size_w != undefined) ? b1c.size_w : 1;
-                        var h1c = (b1c.size_h != undefined) ? b1c.size_h : 1;
-                        var left_c1c = floor(b1c.bbox_left / g) * g + g * 0.5;
-                        var top_c1c  = floor(b1c.bbox_top  / g) * g + g * 0.5;
-                        var half3 = g * 0.5 - 1;
+{
+    var w1c = (b1c.size_w != undefined) ? b1c.size_w : 1;
+    var h1c = (b1c.size_h != undefined) ? b1c.size_h : 1;
+    var left_c1c = floor(b1c.bbox_left / g) * g + g * 0.5;
+    var top_c1c  = floor(b1c.bbox_top  / g) * g + g * 0.5;
+    var half3 = g * 0.5 - 1;
 
-                        if (dx32 != 0) {
-                            var lead_x1c = (dx32 > 0) ? left_c1c + (w1c-1)*g : left_c1c;
-                            for (var j2=0; j2<h1c; j2++) {
-                                var cx2 = lead_x1c + dx32, cy2 = top_c1c + j2*g;
-                                var l3 = cx2 - half3, t3 = cy2 - half3, r3 = cx2 + half3, b3 = cy2 + half3;
-                                var hit2 = collision_rectangle(l3,t3,r3,b3, Obj_box_parent, false, true);
-                                if (hit2 != noone && hit2 != b1c) { b2c = hit2; break; }
-                            }
-                        } else {
-                            var lead_y1c = (dy32 > 0) ? top_c1c + (h1c-1)*g : top_c1c;
-                            for (var i2=0; i2<w1c; i2++) {
-                                var cx2 = left_c1c + i2*g, cy2 = lead_y1c + dy32;
-                                var l3 = cx2 - half3, t3 = cy2 - half3, r3 = cx2 + half3, b3 = cy2 + half3;
-                                var hit2 = collision_rectangle(l3,t3,r3,b3, Obj_box_parent, false, true);
-                                if (hit2 != noone && hit2 != b1c) { b2c = hit2; break; }
-                            }
-                        }
+    if (dx32 != 0) {
+        var lead_x1c = (dx32 > 0) ? left_c1c + (w1c-1)*g : left_c1c;
+        for (var j2=0; j2<h1c; j2++) {
+            var cx2 = lead_x1c + dx32, cy2 = top_c1c + j2*g;
+            var l3 = cx2 - half3, t3 = cy2 - half3, r3 = cx2 + half3, b3 = cy2 + half3;
+            var hit2 = collision_rectangle(l3,t3,r3,b3, Obj_box_parent, false, true);
+            if (hit2 != noone && hit2 != b1c) { b2c = hit2; break; }
+        }
+    } else {
+        var lead_y1c = (dy32 > 0) ? top_c1c + (h1c-1)*g : top_c1c;
+        for (var i2=0; i2<w1c; i2++) {
+            var cx2 = left_c1c + i2*g, cy2 = lead_y1c + dy32;
+            var l3 = cx2 - half3, t3 = cy2 - half3, r3 = cx2 + half3, b3 = cy2 + half3;
+            var hit2 = collision_rectangle(l3,t3,r3,b3, Obj_box_parent, false, true);
+            if (hit2 != noone && hit2 != b1c) { b2c = hit2; break; }
+        }
+    }
 
-                        if (b2c != noone) {
-                            if (!box_edge_clear(b2c, dx32, dy32)) blocked2 = true;
-                        }
-                    }
+    if (b2c != noone) {
+        // ★ b2c 축 제한: width는 상/하만, length는 좌/우만
+        if (b2c.object_index == Obj_width_box  && dx32 != 0)  blocked2 = true;
+        if (b2c.object_index == Obj_length_box && dy32 != 0)  blocked2 = true;
+
+        // ★ 전면 비어있는지 최종 확인
+        if (!blocked2 && !box_edge_clear(b2c, dx32, dy32))    blocked2 = true;
+    }
+}
+
 
                     // 두 고양이 파워 = 2 (heavy는 2)
                     var required2 = ((b1c.object_index == Obj_heavy_box) ? 2 : 1)
