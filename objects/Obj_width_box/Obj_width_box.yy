@@ -36,9 +36,6 @@
     "name":"Spr_width_box",
     "path":"sprites/Spr_width_box/Spr_width_box.yy",
   },
-  "spriteMaskId":{
-    "name":"Spr_length_box",
-    "path":"sprites/Spr_length_box/Spr_length_box.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

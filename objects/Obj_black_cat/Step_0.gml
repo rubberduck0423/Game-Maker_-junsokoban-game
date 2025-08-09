@@ -80,10 +80,15 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         // 1) 박스 밀기 (단독 시도)
         else if (b1 != noone)
         {
+			with (b1) show_debug_message("bbox=" + string(bbox_right - bbox_left) + "x" + string(bbox_bottom - bbox_top));
+with (b1) show_debug_message("spr=" + sprite_get_name(sprite_index) + ", mask=" + (mask_index >= 0 ? sprite_get_name(mask_index) : "none"));
+with (b1) show_debug_message("obj=" + object_get_name(object_index) + ", size=" + string(size_w) + "x" + string(size_h) + ", scale=" + string(image_xscale) + "," + string(image_yscale));
+
+			
             // 축 제한: width(2x1)=위/아래만, length(1x2)=좌/우만
             var lock_axis = false;
-            if (b1.object_index == Obj_width_box  && dx32 != 0) lock_axis = true; // 가로형은 좌/우 금지
-            if (b1.object_index == Obj_length_box && dy32 != 0) lock_axis = true; // 세로형은 위/아래 금지
+            if (b1.size_w > b1.size_h && dx32 != 0) lock_axis = true; // 가로형(2x1)은 좌/우 금지 → 상/하만
+			if (b1.size_h > b1.size_w && dy32 != 0) lock_axis = true; // 세로형(1x2)은 상/하 금지 → 좌/우만
 
             if (!lock_axis)
             {
@@ -188,8 +193,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
             {
                 // 축 제한
                 var lock_axis2 = false;
-                if (b1c.object_index == Obj_width_box  && dx32 != 0) lock_axis2 = true;
-                if (b1c.object_index == Obj_length_box && dy32 != 0) lock_axis2 = true;
+                if (b1c.size_w > b1c.size_h && dx32 != 0) lock_axis2 = true;
+				if (b1c.size_h > b1c.size_w && dy32 != 0) lock_axis2 = true;
 
                 if (!lock_axis2)
                 {

@@ -82,8 +82,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         {
             // 축 제한: width(2x1)=위/아래만, length(1x2)=좌/우만
             var lock_axis = false;
-            if (b1.object_index == Obj_width_box  && dx32 != 0) lock_axis = true; // 가로형은 좌/우 금지
-            if (b1.object_index == Obj_length_box && dy32 != 0) lock_axis = true; // 세로형은 위/아래 금지
+            if (b1.size_w > b1.size_h && dx32 != 0) lock_axis = true; // 가로형(2x1)은 좌/우 금지 → 상/하만
+			if (b1.size_h > b1.size_w && dy32 != 0) lock_axis = true; // 세로형(1x2)은 상/하 금지 → 좌/우만
 
             if (!lock_axis)
             {
@@ -188,8 +188,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
             {
                 // 축 제한
                 var lock_axis2 = false;
-                if (b1c.object_index == Obj_width_box  && dx32 != 0) lock_axis2 = true;
-                if (b1c.object_index == Obj_length_box && dy32 != 0) lock_axis2 = true;
+                if (b1c.size_w > b1c.size_h && dx32 != 0) lock_axis2 = true;
+				if (b1c.size_h > b1c.size_w && dy32 != 0) lock_axis2 = true;
 
                 if (!lock_axis2)
                 {
