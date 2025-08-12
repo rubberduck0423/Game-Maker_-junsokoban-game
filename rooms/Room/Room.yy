@@ -28,6 +28,8 @@
     {"name":"inst_3F6C351D","path":"rooms/Room/Room.yy",},
     {"name":"inst_353A2B85","path":"rooms/Room/Room.yy",},
     {"name":"inst_789CB9CB","path":"rooms/Room/Room.yy",},
+    {"name":"inst_623B264E","path":"rooms/Room/Room.yy",},
+    {"name":"inst_58AA384F","path":"rooms/Room/Room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -50,6 +52,8 @@
             {"$GMRInstance":"v2","%Name":"inst_3F6C351D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3F6C351D","objectId":{"name":"Obj_ice_box","path":"objects/Obj_ice_box/Obj_ice_box.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":2.0,"x":224.0,"y":384.0,},
             {"$GMRInstance":"v2","%Name":"inst_353A2B85","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_353A2B85","objectId":{"name":"Obj_heavy_box","path":"objects/Obj_heavy_box/Obj_heavy_box.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":2.0,"x":224.0,"y":256.0,},
             {"$GMRInstance":"v2","%Name":"inst_789CB9CB","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_789CB9CB","objectId":{"name":"Obj_length_box","path":"objects/Obj_length_box/Obj_length_box.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":2.0,"x":320.0,"y":512.0,},
+            {"$GMRInstance":"v2","%Name":"inst_623B264E","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_623B264E","objectId":{"name":"Obj_button","path":"objects/Obj_button/Obj_button.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":2.0,"x":640.0,"y":352.0,},
+            {"$GMRInstance":"v2","%Name":"inst_58AA384F","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_58AA384F","objectId":{"name":"Obj_door","path":"objects/Obj_door/Obj_door.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":672.0,"y":288.0,},
           ],"layers":[],"name":"Instances_6","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
         {"$GMRInstanceLayer":"","%Name":"Instances_3","depth":400,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
             {"$GMRInstance":"v2","%Name":"inst_12C20BE7","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_12C20BE7","objectId":{"name":"Obj_controller","path":"objects/Obj_controller/Obj_controller.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":416.0,"y":512.0,},
@@ -109,7 +113,7 @@
   },
   "sequenceId":null,
   "views":[
-    {"hborder":32,"hport":768,"hspeed":-1,"hview":384,"inherit":false,"objectId":{"name":"Obj_black_cat","path":"objects/Obj_black_cat/Obj_black_cat.yy",},"vborder":32,"visible":true,"vspeed":-1,"wport":1344,"wview":672,"xport":0,"xview":0,"yport":0,"yview":0,},
+    {"hborder":160,"hport":768,"hspeed":-3,"hview":384,"inherit":false,"objectId":{"name":"Obj_where","path":"objects/Obj_where/Obj_where.yy",},"vborder":160,"visible":true,"vspeed":-3,"wport":1344,"wview":672,"xport":0,"xview":0,"yport":0,"yview":0,},
     {"hborder":32,"hport":768,"hspeed":-1,"hview":768,"inherit":false,"objectId":null,"vborder":32,"visible":false,"vspeed":-1,"wport":1366,"wview":1366,"xport":0,"xview":0,"yport":0,"yview":0,},
     {"hborder":32,"hport":768,"hspeed":-1,"hview":768,"inherit":false,"objectId":null,"vborder":32,"visible":false,"vspeed":-1,"wport":1366,"wview":1366,"xport":0,"xview":0,"yport":0,"yview":0,},
     {"hborder":32,"hport":768,"hspeed":-1,"hview":768,"inherit":false,"objectId":null,"vborder":32,"visible":false,"vspeed":-1,"wport":1366,"wview":1366,"xport":0,"xview":0,"yport":0,"yview":0,},
