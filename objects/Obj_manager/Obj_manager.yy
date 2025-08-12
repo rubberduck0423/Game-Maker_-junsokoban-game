@@ -1,11 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"Obj_wall",
+  "%Name":"Obj_manager",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"Obj_wall",
+  "name":"Obj_manager",
   "overriddenProperties":[],
   "parent":{
     "name":"junsokoban",
@@ -29,10 +29,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"Spr_wall",
-    "path":"sprites/Spr_wall/Spr_wall.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

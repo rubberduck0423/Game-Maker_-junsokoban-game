@@ -18,3 +18,46 @@ channel_id = 0;
 
 // 디버그 표시 토글(원하면 true로)
 debug_draw = false;
+
+/// Obj_door : Create (추가) — 이 문과 겹치는 벽 캐시
+walls_hit = [];
+{
+    var L = ds_list_create();
+    var n = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom,
+                                     Obj_wall, false, true, L, true);
+    for (var i = 0; i < n; i++) {
+        array_push(walls_hit, L[| i]);
+    }
+    ds_list_destroy(L);
+}
+
+/// Obj_door : Create  (추가 - 즉시 스캔 on/off 유틸)
+
+walls_enable_now = function () {
+    var L = ds_list_create();
+    var n = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom,
+                                     Obj_wall, false, true, L, true);
+    for (var i = 0; i < n; i++) {
+        var w = L[| i];
+        with (w) {
+            // active 변수가 없어도 만들어서 true로
+            active  = true;
+            visible = true; // 보기만 편의(원하면 주석)
+        }
+    }
+    ds_list_destroy(L);
+};
+
+walls_disable_now = function () {
+    var L = ds_list_create();
+    var n = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom,
+                                     Obj_wall, false, true, L, true);
+    for (var i = 0; i < n; i++) {
+        var w = L[| i];
+        with (w) {
+            active  = false;
+            visible = false; // 보기만 편의(원하면 주석)
+        }
+    }
+    ds_list_destroy(L);
+};

@@ -1,17 +1,20 @@
 {
   "$GMObject":"",
-  "%Name":"Obj_wall",
+  "%Name":"Obj_door_block",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"Obj_wall",
+  "name":"Obj_door_block",
   "overriddenProperties":[],
   "parent":{
     "name":"junsokoban",
     "path":"junsokoban.yyp",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"Obj_wall",
+    "path":"objects/Obj_wall/Obj_wall.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -30,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Spr_wall",
-    "path":"sprites/Spr_wall/Spr_wall.yy",
+    "name":"Spr_door_closed",
+    "path":"sprites/Spr_door_closed/Spr_door_closed.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_wall_query",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_wall_query",
+  "parent":{
+    "name":"junsokoban",
+    "path":"junsokoban.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

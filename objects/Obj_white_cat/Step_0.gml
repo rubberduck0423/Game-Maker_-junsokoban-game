@@ -1,3 +1,29 @@
+/// [PATCH] local wall helpers (define here to avoid creation-order issues)
+function wall_rect_hit(l, t, r, b) {
+    var L = ds_list_create();
+    var hit = noone;
+    var n = collision_rectangle_list(l, t, r, b, Obj_wall, false, true, L, true);
+    for (var i = 0; i < n; i++) {
+        var w = L[| i];
+        // Obj_wall에 active가 없더라도 기본 true로 취급
+        if (!is_undefined(w.active) ? w.active : true) { hit = w; break; }
+    }
+    ds_list_destroy(L);
+    return hit;
+}
+function wall_point_hit(px, py) {
+    var L = ds_list_create();
+    var hit = noone;
+    var n = collision_point_list(px, py, Obj_wall, false, true, L, true);
+    for (var i = 0; i < n; i++) {
+        var w = L[| i];
+        if (!is_undefined(w.active) ? w.active : true) { hit = w; break; }
+    }
+    ds_list_destroy(L);
+    return hit;
+}
+
+
 // 선택 안 됐으면 종료. 단, 이미 moving 중이면 계속 움직이게 허용
 if (!variable_global_exists("current_player")) exit;
 if (id != global.current_player && !moving) exit;
@@ -21,7 +47,8 @@ function box_edge_clear(_box, _dx32, _dy32) {
             var cx = lead_x + _dx32;
             var cy = top_c + j*grid;
             var l = cx - half, t = cy - half, r = cx + half, b = cy + half;
-            if (collision_rectangle(l,t,r,b, Obj_wall,       false, true)) return false;
+            if (wall_rect_hit(l,t,r,b)) return false;
+
             if (collision_rectangle(l,t,r,b, Obj_box_parent, false, true)) return false;
             if (collision_rectangle(l,t,r,b, Obj_cat_parent, false, true)) return false;
         }
@@ -31,7 +58,8 @@ function box_edge_clear(_box, _dx32, _dy32) {
             var cx = left_c + i*grid;
             var cy = lead_y + _dy32;
             var l = cx - half, t = cy - half, r = cx + half, b = cy + half;
-            if (collision_rectangle(l,t,r,b, Obj_wall,       false, true)) return false;
+            if (wall_rect_hit(l,t,r,b)) return false;
+
             if (collision_rectangle(l,t,r,b, Obj_box_parent, false, true)) return false;
             if (collision_rectangle(l,t,r,b, Obj_cat_parent, false, true)) return false;
         }
@@ -67,7 +95,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         var l = fx - half, t = fy - half, r = fx + half, b = fy + half;
 
         // --- 앞칸 점유 검사(칸 전체) ---
-        var hit_wall = collision_rectangle(l, t, r, b, Obj_wall,       false, true);
+        var hit_wall = wall_rect_hit(l, t, r, b);
+
         var b1       = collision_rectangle(l, t, r, b, Obj_box_parent, false, true);
         var cat1     = collision_rectangle(l, t, r, b, Obj_cat_parent, false, true);
 		
@@ -101,7 +130,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 						var l2 = cx - half2, t2 = cy - half2, r2 = cx + half2, b2r = cy + half2;
 
 						// 벽/고양이면 즉시 막힘
-						if (collision_rectangle(l2,t2,r2,b2r, Obj_wall,       false, true)) { blocked = true; break; }
+						if (wall_rect_hit(l2,t2,r2,b2r)) { blocked = true; break; }
+
 						if (collision_rectangle(l2,t2,r2,b2r, Obj_cat_parent, false, true)) { blocked = true; break; }
 
 						// 박스면 b2로 잡기(첫 개만)
@@ -115,7 +145,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
 						var cy = lead_y1 + dy32;
 						var l2 = cx - half2, t2 = cy - half2, r2 = cx + half2, b2r = cy + half2;
 
-						if (collision_rectangle(l2,t2,r2,b2r, Obj_wall,       false, true)) { blocked = true; break; }
+						if (wall_rect_hit(l2,t2,r2,b2r)) { blocked = true; break; }
+
 						if (collision_rectangle(l2,t2,r2,b2r, Obj_cat_parent, false, true)) { blocked = true; break; }
 
 						var hitBox = collision_rectangle(l2,t2,r2,b2r, Obj_box_parent, false, true);
@@ -192,7 +223,8 @@ if (!moving && queue_dx == 0 && queue_dy == 0)
         else if (
 			cat1 != noone && cat1 != id
 			&& !cat1.moving
-			&& instance_position(fx + dx32, fy + dy32, Obj_wall)       == noone
+			&& wall_point_hit(fx + dx32, fy + dy32) == noone
+
 			&& instance_position(fx + dx32, fy + dy32, Obj_cat_parent) == noone
 		)
 
@@ -224,7 +256,8 @@ if (dx32 != 0) {
         var cx2 = lead_x1c + dx32, cy2 = top_c1c + j2*g;
         var l3 = cx2 - half3, t3 = cy2 - half3, r3 = cx2 + half3, b3 = cy2 + half3;
 
-        if (collision_rectangle(l3,t3,r3,b3, Obj_wall,       false, true)) { blocked2 = true; break; }
+        if (wall_rect_hit(l3,t3,r3,b3)) { blocked2 = true; break; }
+
         if (collision_rectangle(l3,t3,r3,b3, Obj_cat_parent, false, true)) { blocked2 = true; break; }
 
         var hit2 = collision_rectangle(l3,t3,r3,b3, Obj_box_parent, false, true);
@@ -236,7 +269,8 @@ if (dx32 != 0) {
         var cx2 = left_c1c + i2*g, cy2 = lead_y1c + dy32;
         var l3 = cx2 - half3, t3 = cy2 - half3, r3 = cx2 + half3, b3 = cy2 + half3;
 
-        if (collision_rectangle(l3,t3,r3,b3, Obj_wall,       false, true)) { blocked2 = true; break; }
+        if (wall_rect_hit(l3,t3,r3,b3)) { blocked2 = true; break; }
+
         if (collision_rectangle(l3,t3,r3,b3, Obj_cat_parent, false, true)) { blocked2 = true; break; }
 
         var hit2 = collision_rectangle(l3,t3,r3,b3, Obj_box_parent, false, true);
