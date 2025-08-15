@@ -13,3 +13,7 @@ if (!instance_exists(global.current_player)) {
 if (variable_instance_exists(id, "target"))        target        = global.current_player;
 if (variable_instance_exists(id, "follow"))        follow        = global.current_player;
 if (variable_instance_exists(id, "follow_target")) follow_target = global.current_player;
+
+
+
+
