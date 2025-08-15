@@ -1,7 +1,7 @@
 {
   "$GMSprite":"",
   "%Name":"Spr_button_blue_down",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":45,
   "bbox_left":18,
   "bbox_right":29,
@@ -23,7 +23,7 @@
   ],
   "name":"Spr_button_blue_down",
   "nineSlice":null,
-  "origin":0,
+  "origin":9,
   "parent":{
     "name":"junsokoban",
     "path":"junsokoban.yyp",
@@ -77,8 +77,8 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
-    "yorigin":0,
+    "xorigin":16,
+    "yorigin":48,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

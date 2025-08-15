@@ -13,6 +13,13 @@ sprite_index = spr_closed;
 image_index  = 0;
 image_speed  = 0;    // CLOSED는 정지
 
+// [ADD] 닫힌 상태 bbox를 고정 저장(이 좌표로만 스캔)
+door_l = bbox_left;
+door_t = bbox_top;
+door_r = bbox_right;
+door_b = bbox_bottom;
+
+
 // 버튼-문 매칭(기본: 채널 0)
 channel_id = 0;
 
@@ -33,31 +40,26 @@ walls_hit = [];
 
 /// Obj_door : Create  (추가 - 즉시 스캔 on/off 유틸)
 
+// [CHANGE] enable
 walls_enable_now = function () {
     var L = ds_list_create();
-    var n = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom,
+    var n = collision_rectangle_list(door_l, door_t, door_r, door_b,   // ← 여기!
                                      Obj_wall, false, true, L, true);
     for (var i = 0; i < n; i++) {
         var w = L[| i];
-        with (w) {
-            // active 변수가 없어도 만들어서 true로
-            active  = true;
-            visible = true; // 보기만 편의(원하면 주석)
-        }
+        with (w) { active = true;  visible = true; }
     }
     ds_list_destroy(L);
 };
 
+// [CHANGE] disable
 walls_disable_now = function () {
     var L = ds_list_create();
-    var n = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom,
+    var n = collision_rectangle_list(door_l, door_t, door_r, door_b,   // ← 여기!
                                      Obj_wall, false, true, L, true);
     for (var i = 0; i < n; i++) {
         var w = L[| i];
-        with (w) {
-            active  = false;
-            visible = false; // 보기만 편의(원하면 주석)
-        }
+        with (w) { active = false; visible = false; }
     }
     ds_list_destroy(L);
 };

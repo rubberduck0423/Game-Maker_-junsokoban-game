@@ -1,9 +1,12 @@
 {
   "$GMObject":"",
-  "%Name":"Obj_door_blue",
-  "eventList":[],
+  "%Name":"Obj_blue_door",
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":2,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
-  "name":"Obj_door_blue",
+  "name":"Obj_blue_door",
   "overriddenProperties":[],
   "parent":{
     "name":"junsokoban",
@@ -27,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"Spr_blue_door_opened",
+    "path":"sprites/Spr_blue_door_opened/Spr_blue_door_opened.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }
