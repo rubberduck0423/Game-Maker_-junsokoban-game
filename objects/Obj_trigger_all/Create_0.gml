@@ -1,12 +1,13 @@
-/// Obj_trigger_all : Create
 tile = 32;
-grid_w = 1;      // 기본 1×2 = 32×64
-grid_h = 2;
+grid_w = 1;
+grid_h = 1;          // ← 32×32 (중요)
+mode_group = true;   // ← 그룹 모드 ON (중요)
+channel_id = 1;      // ← 두 인스턴스 모두 같은 숫자 (중요)
 
-target_room = noone;
+target_room = noone// 두 인스턴스 모두 같은 다음 룸으로
 exit_lock   = false;
 debug_draw  = false;
 
-// 그룹 모드(옵션): 같은 채널의 여러 트리거가 "각각 1마리 이상" 차면 이동
-mode_group = false;
-channel_id = 0;
+// 경고(노란줄) 방지용 인스턴스 변수 초기화
+_group_all_ok     = false;
+_group_cur_in_any = false;

@@ -1,50 +1,36 @@
-/// Obj_trigger_any : End Step
+/// Obj_trigger_any : End Step  (E키 인터랙션)
 if (exit_lock || target_room == noone) exit;
 
+// 트리거 영역(좌하단 기준)
 var left   = x;
 var bottom = y;
 var right  = left + grid_w * tile;
 var top    = bottom - grid_h * tile;
 
-var L = ds_list_create();
-var n = collision_rectangle_list(left, top, right, bottom, Obj_cat_parent, false, true, L, true);
-ds_list_destroy(L);
+// 영역 내 고양이 수, '현재 조작 캐릭터'가 안에 있는가
+_count  = 0;     // ← 인스턴스 변수로 사용 (self._count 와 동일)
+_cur_in = false; // ← 인스턴스 변수
 
-if (n >= 1) { exit_lock = true; room_goto(target_room); }
-/// Obj_trigger_any : End Step   // ← 통째로 교체
-if (exit_lock || target_room == noone) exit;
-
-// 영역(좌하단 기준)
-var left   = x;
-var bottom = y;
-var right  = left + grid_w * tile;
-var top    = bottom - grid_h * tile;
-
-// 영역 내 고양이 수, 그리고 '현재 조작 중인 고양이'가 안에 있는가
-var count  = 0;
-var cur_in = false;
 
 with (Obj_cat_parent) {
-    var grid = 32;
+    var grid   = 32;
     var foot_x = (bbox_left + bbox_right) * 0.5;
     var foot_y = bbox_bottom;
     var cell_x = floor(foot_x / grid) * grid + grid * 0.5;
     var cell_y = floor(foot_y / grid) * grid + grid * 0.5;
 
-    if (cell_x > left && cell_x < right
-&&  cell_y > top  && cell_y < bottom) {
-        other.count += 1;
+    if (cell_x > left && cell_x < right && cell_y > top && cell_y < bottom) {
+        other._count += 1;
         if (variable_global_exists("current_player") && instance_exists(global.current_player)) {
-            if (id == global.current_player) other.cur_in = true;
+            if (id == global.current_player) other._cur_in = true;
         } else {
-            // current_player가 없으면 그냥 허용
-            other.cur_in = true;
+            other._cur_in = true; // current_player가 없으면 허용
         }
     }
 }
 
-// E키를 '누른 순간' + 현재 조작 고양이가 존 안에 있을 것
-if (keyboard_check_pressed(ord("E")) && cur_in && count >= 1) {
+// ★ E키 눌렀을 때만 발동
+if (keyboard_check_pressed(ord("E")) && _cur_in && _count >= 1) {
     exit_lock = true;
     room_goto(target_room);
 }
