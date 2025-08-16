@@ -1,17 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"Obj_basix_box",
+  "%Name":"Obj_length_box_lid",
   "eventList":[],
   "managed":true,
-  "name":"Obj_basix_box",
+  "name":"Obj_length_box_lid",
   "overriddenProperties":[],
   "parent":{
     "name":"junsokoban",
     "path":"junsokoban.yyp",
   },
   "parentObjectId":{
-    "name":"Obj_light_box",
-    "path":"objects/Obj_light_box/Obj_light_box.yy",
+    "name":"Obj_box_lid",
+    "path":"objects/Obj_box_lid/Obj_box_lid.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Spr_basic_box",
-    "path":"sprites/Spr_basic_box/Spr_basic_box.yy",
+    "name":"Spr_length_box_lid",
+    "path":"sprites/Spr_length_box_lid/Spr_length_box_lid.yy",
   },
   "spriteMaskId":null,
   "visible":true,
