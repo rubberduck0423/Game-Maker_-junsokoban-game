@@ -338,6 +338,7 @@ if (b2c != noone) {
             front_cat.image_index  = 0;
         }
     }
+front_cat.image_speed = 1;
 
     // 내 push 스프라 설정
     {
@@ -362,6 +363,7 @@ if (b2c != noone) {
             image_index  = 0;
         }
     }
+image_speed = 1;
     // ★★★ 추가 끝 ★★★
 }
                     }
@@ -389,6 +391,7 @@ if (b2c != noone) {
                 case "right": walk_sprite = Spr_white_cat_right_walking;  break;
             }
             if (sprite_index != walk_sprite) { sprite_index = walk_sprite; image_index = 0; }
+			image_speed = 1;
         
     }
            

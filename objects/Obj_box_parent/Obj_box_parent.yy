@@ -12,7 +12,10 @@
     "name":"junsokoban",
     "path":"junsokoban.yyp",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"Obj_resettable_parent",
+    "path":"objects/Obj_resettable_parent/Obj_resettable_parent.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

@@ -3,6 +3,7 @@
   "%Name":"Obj_cat_parent",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
   "name":"Obj_cat_parent",
@@ -11,7 +12,10 @@
     "name":"junsokoban",
     "path":"junsokoban.yyp",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"Obj_resettable_parent",
+    "path":"objects/Obj_resettable_parent/Obj_resettable_parent.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

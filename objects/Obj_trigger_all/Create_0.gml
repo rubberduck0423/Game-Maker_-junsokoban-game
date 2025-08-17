@@ -1,3 +1,6 @@
+event_inherited();
+
+
 tile = 32;
 grid_w = 1;
 grid_h = 1;          // ← 32×32 (중요)
@@ -11,3 +14,11 @@ debug_draw  = false;
 // 경고(노란줄) 방지용 인스턴스 변수 초기화
 _group_all_ok     = false;
 _group_cur_in_any = false;
+
+
+reset = function () {
+    _reset_base();
+    exit_lock = false;
+    if (variable_instance_exists(id, "_count"))  _count  = 0;
+    if (variable_instance_exists(id, "_cur_in")) _cur_in = false;
+};

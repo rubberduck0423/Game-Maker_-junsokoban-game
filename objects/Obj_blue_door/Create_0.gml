@@ -1,3 +1,5 @@
+event_inherited();
+
 /// Obj_blue_door : Create
 enum BlueDoorState { CLOSED, OPENING, OPEN_HOLD, CLOSING }
 
@@ -32,4 +34,17 @@ walls_disable_now = function () {
     var n = collision_rectangle_list(door_l, door_t, door_r, door_b, Obj_wall, false, true, L, true);
     for (var i = 0; i < n; i++) with (L[| i]) { active = false; visible = false; }
     ds_list_destroy(L);
+};
+
+
+
+reset = function () {
+    _reset_base();
+
+    state        = DoorState.CLOSED;
+    sprite_index = Spr_blue_door_closed;
+    image_index  = 0; image_speed = 0;
+
+    if (variable_instance_exists(id, "walls_enable_now")) walls_enable_now();
+    if (variable_instance_exists(id, "block_spawn"))     block_spawn();
 };
