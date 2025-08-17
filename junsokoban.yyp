@@ -153,7 +153,6 @@
     {"id":{"name":"Spr_white_cat_right_walking","path":"sprites/Spr_white_cat_right_walking/Spr_white_cat_right_walking.yy",},},
     {"id":{"name":"Spr_width_box_lid","path":"sprites/Spr_width_box_lid/Spr_width_box_lid.yy",},},
     {"id":{"name":"Spr_width_box","path":"sprites/Spr_width_box/Spr_width_box.yy",},},
-    {"id":{"name":"Sprite78","path":"sprites/Sprite78/Sprite78.yy",},},
     {"id":{"name":"TileSet_Doors_windows","path":"tilesets/TileSet_Doors_windows/TileSet_Doors_windows.yy",},},
     {"id":{"name":"TileSet_exterior","path":"tilesets/TileSet_exterior/TileSet_exterior.yy",},},
     {"id":{"name":"TileSet_ground_grass_details","path":"tilesets/TileSet_ground_grass_details/TileSet_ground_grass_details.yy",},},
