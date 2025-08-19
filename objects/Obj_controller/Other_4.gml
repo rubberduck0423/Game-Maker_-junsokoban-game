@@ -1,5 +1,6 @@
 /// Obj_controller : Room Start
-// current_player가 없거나(최초) 이전 룸 인스턴스를 가리키면 재선정
+
+// 1) current_player 선정(있으면 유지, 없으면 찾아서 대입)
 if (!variable_global_exists("current_player")) global.current_player = noone;
 
 if (!instance_exists(global.current_player)) {
@@ -9,11 +10,15 @@ if (!instance_exists(global.current_player)) {
     global.current_player = p;
 }
 
-// (옵션) 카메라 추적 대상도 갱신 — 네 변수명에 맞춰 하나만 쓰기
+// 2) (옵션) 카메라 추적 대상 동기화
 if (variable_instance_exists(id, "target"))        target        = global.current_player;
 if (variable_instance_exists(id, "follow"))        follow        = global.current_player;
 if (variable_instance_exists(id, "follow_target")) follow_target = global.current_player;
 
-
-
-
+// 3) indicator 생성/재설치 — ★여기로 이동★
+if (!instance_exists(Obj_where) && instance_exists(global.current_player)) {
+    var lay = layer_exists("Instances") ? layer_get_id("Instances") : layer;
+    var ind = instance_create_layer(global.current_player.x, global.current_player.y, lay, Obj_where);
+    // 필요하면 ind에 추적 대상 지정:
+    if (variable_instance_exists(ind, "owner")) ind.owner = global.current_player;
+}
