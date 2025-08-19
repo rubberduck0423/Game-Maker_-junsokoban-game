@@ -252,6 +252,7 @@
     {"name":"inst_2804536B","path":"rooms/Room/Room.yy",},
     {"name":"inst_28665F87","path":"rooms/Room/Room.yy",},
     {"name":"inst_46457A9A","path":"rooms/Room/Room.yy",},
+    {"name":"inst_768DD23C","path":"rooms/Room/Room.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -310,6 +311,7 @@
           ],"layers":[],"name":"Instances_button_Obj","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
         {"$GMRInstanceLayer":"","%Name":"Instances_trigger_Obj","depth":800,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
             {"$GMRInstance":"v2","%Name":"inst_6792E182","colour":4294967295,"frozen":false,"hasCreationCode":true,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_6792E182","objectId":{"name":"Obj_trigger_any","path":"objects/Obj_trigger_any/Obj_trigger_any.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1344.0,"y":224.0,},
+            {"$GMRInstance":"v2","%Name":"inst_768DD23C","colour":4294967295,"frozen":false,"hasCreationCode":true,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_768DD23C","objectId":{"name":"Obj_trigger_any","path":"objects/Obj_trigger_any/Obj_trigger_any.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":32.0,"y":864.0,},
           ],"layers":[],"name":"Instances_trigger_Obj","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
         {"$GMRInstanceLayer":"","%Name":"Instances_door_Obj","depth":900,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
             {"$GMRInstance":"v2","%Name":"inst_6A20405D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_6A20405D","objectId":{"name":"Obj_door","path":"objects/Obj_door/Obj_door.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":2.0,"x":1280.0,"y":320.0,},
